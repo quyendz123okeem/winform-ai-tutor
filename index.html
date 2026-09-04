@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor: WinForm Cơ Bản Không Còn Khó</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar: Curriculum & Student Model -->
+        <aside class="sidebar glass-panel">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap brand-icon"></i>
+                <h2>WinForm Tutor</h2>
+            </div>
+            
+            <div class="student-profile">
+                <h3><i class="fa-solid fa-user-graduate"></i> Học viên A</h3>
+                <div class="progress-section">
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>C# Cơ Bản</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill excellent" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>WinForms</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill good" style="width: 80%;"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>Event Handling</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill average" style="width: 45%;"></div></div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>DataGridView</span>
+                            <span>38%</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill weak" style="width: 38%;"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="curriculum">
+                <h3><i class="fa-solid fa-map"></i> Bản đồ Kiến thức</h3>
+                <ul class="nav-list">
+                    <li class="completed"><i class="fa-solid fa-check-circle"></i> C# OOP</li>
+                    <li class="completed"><i class="fa-solid fa-check-circle"></i> Các Control cơ bản</li>
+                    <li class="active"><i class="fa-solid fa-play-circle"></i> Event & Form Lifecycle</li>
+                    <li class="locked"><i class="fa-solid fa-lock"></i> DataGridView & ADO.NET</li>
+                    <li class="locked"><i class="fa-solid fa-lock"></i> SQL CRUD</li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-actions">
+                <button class="btn btn-outline" id="btn-diagnostic">
+                    <i class="fa-solid fa-stethoscope"></i> Bài Test Chẩn Đoán
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <header class="chat-header glass-panel">
+                <div class="header-info">
+                    <h1>AI Tutor Engine <span class="badge">Adaptive Mode</span></h1>
+                    <p>Luôn bám sát chương trình học và hướng dẫn từng bước.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-icon" title="Upload Tài liệu / Code"><i class="fa-solid fa-paperclip"></i></button>
+                    <button class="btn btn-icon" title="Cài đặt"><i class="fa-solid fa-cog"></i></button>
+                </div>
+            </header>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages will appear here -->
+                <div class="message tutor">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="message-content glass-message">
+                        <p>Chào bạn! Mình là AI Tutor môn WinForms. Hôm nay bạn muốn mình hỗ trợ bài học nào? Mình thấy bạn đang yếu phần <strong>Event Handling</strong> và <strong>DataGridView</strong>, chúng ta có thể làm vài bài tập nhỏ nhé!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-wrapper glass-panel">
+                <div class="input-container">
+                    <button class="btn btn-icon text-muted" title="Upload Code Snippet"><i class="fa-solid fa-code"></i></button>
+                    <textarea id="chat-input" placeholder="Hỏi câu hỏi (ví dụ: Tại sao code này không chạy? Làm sao để thêm dữ liệu vào DataGridView?)..." rows="1"></textarea>
+                    <button class="btn btn-primary btn-send" id="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+                <div class="domain-restriction-hint">
+                    <i class="fa-solid fa-circle-info"></i> Chỉ hỗ trợ các kiến thức nằm trong môn học WinForms.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals or extra features could go here -->
+    <div id="diagnostic-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-stethoscope"></i> Bài Test Chẩn Đoán</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Hãy trả lời một vài câu hỏi để mình đánh giá lại trình độ của bạn nhé!</p>
+                <div class="quiz-container">
+                    <p><strong>Câu 1:</strong> Sự kiện nào xảy ra đầu tiên khi một Form được khởi tạo?</p>
+                    <label><input type="radio" name="q1" value="a"> Form_Load</label><br>
+                    <label><input type="radio" name="q1" value="b"> Constructor</label><br>
+                    <label><input type="radio" name="q1" value="c"> Form_Shown</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btn-submit-test">Nộp bài</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

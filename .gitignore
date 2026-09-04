@@ -1,0 +1,36 @@
+# Python
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# Environment / API keys
+.env
+*.env
+
+# Node.js
+frontend/node_modules/
+frontend/.next/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary scripts
+scratch_*.py
+
+# Training documents
+FileTrain/
+
+# Generated RAG data
+backend/chroma_db/
+
+# Runtime uploads
+backend/uploads/

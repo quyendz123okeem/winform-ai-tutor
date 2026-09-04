@@ -1,0 +1,613 @@
+# PROJECT BRIEF — “WINFORM CƠ BẢN KHÔNG CÒN KHÓ!”
+
+## 1. Ý tưởng tổng thể
+
+Xây dựng một **web AI Tutor hỗ trợ sinh viên học môn Lập trình WinForms cơ bản**.
+
+Pain point cần giải quyết:
+
+* Sinh viên có thể biết cách hỏi ChatGPT nhưng thường nhận được câu trả lời trực tiếp, thậm chí cả code hoàn chỉnh.
+* ChatGPT không mặc định biết sinh viên đang học đến chương nào, đã được học những kiến thức gì, kiến thức nào là prerequisite, sinh viên đang yếu phần nào.
+* Vì vậy khi đề bài thay đổi cách hỏi hoặc kết hợp nhiều kiến thức, sinh viên dễ bị phụ thuộc vào code mẫu và không tự giải được.
+* Giảng viên cũng khó biết toàn bộ lớp đang yếu ở kiến thức nào.
+
+### Ý tưởng cốt lõi
+
+Không xây dựng một chatbot tổng quát.
+
+Không xây dựng một chatbot đơn giản kiểu:
+
+> Upload PDF → RAG → hỏi đáp.
+
+Hệ thống phải hướng tới mô hình:
+
+> **AI Tutor chuyên biệt cho một môn học + hiểu curriculum + hiểu quan hệ giữa các kiến thức + theo dõi trạng thái học tập của sinh viên + điều chỉnh cách hướng dẫn theo từng sinh viên.**
+
+Có thể hiểu đơn giản:
+
+> **Chatbot trả lời câu hỏi. AI Tutor dạy một con người.**
+
+---
+
+# 2. Tên sản phẩm
+
+Tên sản phẩm/demo:
+
+> **WinForm cơ bản không còn khó!**
+
+Tên đề tài học thuật dự kiến:
+
+> **Xây dựng hệ thống AI Tutor hỗ trợ học tập và thực hành lập trình WinForms cơ bản**
+
+Không cần dùng tên học thuật này làm logo/giao diện.
+
+---
+
+# 3. Đối tượng sử dụng
+
+## Sinh viên
+
+Mục tiêu:
+
+* Hiểu kiến thức.
+* Hiểu vì sao code hoạt động.
+* Tự giải được bài.
+* Biết mình đang yếu phần nào.
+* Được hướng dẫn phù hợp với trình độ hiện tại.
+
+## Giảng viên
+
+Mục tiêu:
+
+* Cung cấp tài liệu môn học.
+* Quản lý curriculum/knowledge base.
+* Theo dõi các vấn đề sinh viên thường hỏi.
+* Theo dõi các kiến thức sinh viên yếu.
+* Về sau có thể xem learning analytics.
+
+---
+
+# 4. Nguyên tắc quan trọng nhất của AI Tutor
+
+## KHÔNG mặc định đưa đáp án hoàn chỉnh ngay.
+
+Ví dụ sinh viên hỏi:
+
+> “Làm bài quản lý sinh viên này như thế nào?”
+
+AI không nên ngay lập tức trả:
+
+> Đây là toàn bộ source code 500 dòng.
+
+Thay vào đó:
+
+1. Xác định sinh viên đang muốn giải phần nào.
+2. Kiểm tra sinh viên đã học những prerequisite nào.
+3. Xác định kiến thức liên quan.
+4. Hướng dẫn từng bước.
+5. Có thể hỏi ngược để kiểm tra hiểu biết.
+6. Chỉ cung cấp code mẫu khi cần.
+7. Nếu sinh viên vẫn không làm được thì tăng mức hỗ trợ.
+
+Mục tiêu là:
+
+> **Giúp sinh viên tự giải được bài, không phải làm bài thay sinh viên.**
+
+---
+
+# 5. Curriculum / Knowledge Map
+
+Hệ thống phải có khái niệm:
+
+> **Knowledge Map của môn WinForms**
+
+Ví dụ:
+
+C# cơ bản
+→ OOP
+→ WinForms cơ bản
+→ Controls
+→ Event Handling
+→ Form Navigation
+→ DataGridView
+→ Validation
+→ ADO.NET
+→ SQL
+→ CRUD
+→ Project tổng hợp
+
+Đây chỉ là ví dụ kiến trúc.
+
+Không được hard-code rằng đây chắc chắn là curriculum chính thức.
+
+Hệ thống phải cho phép giảng viên cấu hình:
+
+* Chương
+* Bài
+* Concept
+* Prerequisite
+* Tài liệu
+* Bài tập
+* Mức độ khó
+
+Ví dụ:
+
+```text
+DataGridView
+    prerequisite:
+        ├── Collection
+        ├── Control
+        └── Event
+
+ADO.NET
+    prerequisite:
+        ├── C#
+        ├── SQL
+        └── Database connection
+```
+
+Mục tiêu dài hạn là xây dựng **Knowledge Graph của môn học**.
+
+---
+
+# 6. Student Model
+
+Mỗi sinh viên có một learning profile.
+
+Ví dụ:
+
+```text
+Student A
+
+C# Basic          85%
+OOP               72%
+WinForms          80%
+Event             45%
+DataGridView      38%
+ADO.NET           20%
+```
+
+Những con số trên chỉ là ví dụ UI.
+
+Hệ thống cần lưu:
+
+* Kiến thức đã học.
+* Kiến thức chưa học.
+* Kiến thức có khả năng yếu.
+* Các câu hỏi đã hỏi.
+* Các bài tập đã làm.
+* Các lỗi thường gặp.
+* Kết quả đánh giá.
+* Mức độ hỗ trợ cần thiết.
+
+Không được giả định rằng một lần hỏi sai = sinh viên chắc chắn không biết kiến thức đó.
+
+Student Model phải được cập nhật từ nhiều tín hiệu.
+
+---
+
+# 7. Adaptive Tutoring
+
+Đây là phần quan trọng nhất của hệ thống.
+
+Khi sinh viên hỏi:
+
+> “Tại sao đoạn code này không chạy?”
+
+AI cần xem đồng thời:
+
+```text
+User Question
++
+Current Curriculum
++
+Relevant Knowledge
++
+Student Learning State
++
+Previous Interactions
++
+Uploaded Course Materials
+```
+
+Sau đó quyết định cách trả lời.
+
+Ví dụ:
+
+### Sinh viên đã hiểu Event
+
+→ Có thể giải thích trực tiếp và đi sâu vào lỗi.
+
+### Sinh viên chưa học Event
+
+→ Giải thích prerequisite trước.
+
+### Sinh viên đã hỏi cùng lỗi nhiều lần
+
+→ Có thể đưa ví dụ trực quan hơn hoặc bài tập nhỏ.
+
+### Sinh viên đang làm bài tập
+
+→ Ưu tiên gợi ý thay vì đưa toàn bộ đáp án.
+
+---
+
+# 8. Upload tài liệu
+
+Sinh viên hoặc giảng viên có thể upload:
+
+* PDF
+* DOCX
+* TXT
+* Source code
+* Đề bài
+* Tài liệu môn học
+
+Tài liệu được xử lý để tạo knowledge base.
+
+AI phải ưu tiên kiến thức trong tài liệu/curriculum của môn học.
+
+Khi trả lời, nếu có thể, hiển thị nguồn:
+
+```text
+Nguồn:
+Chương 3 — Event Handling
+Trang 27
+```
+
+Không được tự bịa nguồn.
+
+---
+
+# 9. Domain Restriction
+
+AI Tutor chỉ hỗ trợ phạm vi môn học được cấu hình.
+
+Ví dụ sinh viên hỏi:
+
+> “Viết cho tao một bài thơ tình.”
+
+AI nên phản hồi rằng nội dung nằm ngoài phạm vi hỗ trợ của hệ thống.
+
+Nếu sinh viên hỏi:
+
+> “Trong WinForms nên dùng WPF hay WinForms?”
+
+Có thể trả lời nếu nội dung được cho phép trong knowledge base hoặc được cấu hình là kiến thức liên quan.
+
+Mục tiêu:
+
+> **Specialized AI Tutor, không phải general chatbot.**
+
+---
+
+# 10. Code Assistant
+
+Sinh viên có thể paste hoặc upload code C# WinForms.
+
+AI có thể:
+
+* Giải thích code.
+* Phát hiện lỗi.
+* Chỉ ra vị trí lỗi.
+* Giải thích nguyên nhân.
+* Gợi ý cách sửa.
+* Đưa code mẫu khi cần.
+
+Quan trọng:
+
+AI phải cố gắng giải thích **concept phía sau lỗi**, không chỉ sửa code.
+
+Ví dụ:
+
+> “Lỗi này liên quan đến việc xử lý sự kiện và vòng đời của Form.”
+
+Thay vì chỉ:
+
+> “Đổi dòng 15 thành dòng 16.”
+
+---
+
+# 11. Exercise Mode
+
+Hệ thống có thể tạo/giao bài tập dựa trên:
+
+* Kiến thức hiện tại.
+* Điểm yếu.
+* Mức độ khó.
+* Chương đang học.
+
+Ví dụ:
+
+Sinh viên yếu DataGridView:
+
+→ hệ thống đề xuất bài tập nhỏ về DataGridView.
+
+Sinh viên đã khá:
+
+→ tăng độ khó, kết hợp DataGridView + Event + Validation.
+
+Mục tiêu dài hạn:
+
+> **Personalized Learning Path**
+
+---
+
+# 12. Diagnostic Mode
+
+Có thể có bài kiểm tra ngắn để xác định:
+
+> Sinh viên đang yếu kiến thức nào?
+
+Ví dụ:
+
+```text
+Question 1 → Event
+Question 2 → DataGridView
+Question 3 → Form navigation
+Question 4 → ADO.NET
+```
+
+Sau đó xây learning profile.
+
+Đây là tính năng có thể phát triển mạnh ở giai đoạn đồ án tốt nghiệp.
+
+---
+
+# 13. Teacher Dashboard
+
+Giai đoạn MVP có thể đơn giản.
+
+Giảng viên có thể xem:
+
+* Số sinh viên.
+* Số câu hỏi.
+* Những concept được hỏi nhiều nhất.
+* Những concept sinh viên gặp khó khăn nhiều nhất.
+* Các lỗi code phổ biến.
+* Các câu hỏi chưa được AI trả lời tốt.
+
+Ví dụ:
+
+```text
+Concept khó nhất tuần này:
+
+1. DataGridView        32%
+2. Event Handling      24%
+3. ADO.NET             19%
+4. Form Navigation     15%
+5. Validation          10%
+```
+
+Các số liệu trên phải được tính từ dữ liệu thực tế, không hard-code.
+
+---
+
+# 14. So sánh với ChatGPT
+
+Hệ thống không được quảng bá theo hướng:
+
+> “AI của chúng tôi thông minh hơn ChatGPT.”
+
+Thay vào đó:
+
+> **ChatGPT là general-purpose LLM. Hệ thống này là specialized AI Tutor có curriculum và student model.**
+
+Có thể xây evaluation framework:
+
+### Baseline
+
+Một LLM tổng quát được hỏi cùng câu hỏi.
+
+### AI Tutor
+
+Hệ thống của chúng ta được hỏi cùng câu hỏi nhưng có:
+
+* Curriculum
+* Knowledge base
+* Student profile
+* Learning history
+
+So sánh:
+
+* Accuracy
+* Curriculum alignment
+* Explanation quality
+* Appropriate difficulty
+* Tendency to give direct answers
+* Ability to identify prerequisite knowledge
+* Student satisfaction
+* Learning outcome
+
+Mục tiêu không phải chứng minh ChatGPT kém.
+
+Mục tiêu:
+
+> **Đánh giá liệu specialization + student modeling + adaptive tutoring có cải thiện hiệu quả hỗ trợ học tập hay không.**
+
+---
+
+# 15. Kiến trúc hệ thống dự kiến
+
+```text
+                    WEB CLIENT
+                        │
+                        ▼
+                 Backend / API
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
+ Student Model      Knowledge Base    Chat Service
+        │               │                │
+        │               ▼                │
+        │          Vector Search         │
+        │               │                │
+        └───────────────┼────────────────┘
+                        ▼
+                 AI Tutor Engine
+                        │
+             ┌──────────┼──────────┐
+             ▼          ▼          ▼
+          LLM       Retrieval   Rules/Policy
+             │          │          │
+             └──────────┼──────────┘
+                        ▼
+                 Adaptive Response
+```
+
+Kiến trúc phải đủ modular để sau này thêm môn khác.
+
+---
+
+# 16. Khả năng mở rộng đa môn
+
+Kỳ này:
+
+> WinForms là môn thử nghiệm đầu tiên.
+
+Không thiết kế hệ thống chỉ dành riêng cho WinForms.
+
+Về kiến trúc phải có:
+
+```text
+Course
+ ├── Curriculum
+ ├── Knowledge Graph
+ ├── Documents
+ ├── Concepts
+ ├── Exercises
+ ├── Assessment
+ └── Student Model
+```
+
+Sau này có thể thêm:
+
+```text
+WinForms
+Java
+C++
+Python
+SQL
+OOP
+Data Structures
+...
+```
+
+Mục tiêu dài hạn:
+
+> **AI Learning Platform cho các môn lập trình.**
+
+Không cần triển khai các môn khác trong MVP.
+
+---
+
+# 17. MVP cho đồ án kỳ này
+
+Ưu tiên hoàn thành:
+
+### Must Have
+
+* Đăng nhập.
+* Chat interface.
+* Upload tài liệu.
+* Knowledge base cho WinForms.
+* RAG.
+* Domain restriction.
+* Citation/source.
+* Code explanation.
+* Lưu lịch sử hội thoại.
+* Curriculum cơ bản.
+* Student profile cơ bản.
+
+### Should Have
+
+* Knowledge map.
+* Exercise mode.
+* Adaptive response.
+* Teacher dashboard cơ bản.
+
+### Có thể để giai đoạn sau
+
+* Diagnostic test.
+* Personalized learning path.
+* Automatic code assessment.
+* Learning analytics nâng cao.
+* Multi-course.
+* Knowledge graph nâng cao.
+* Human feedback loop.
+
+---
+
+# 18. Nguyên tắc thiết kế
+
+Không biến sản phẩm thành:
+
+> “ChatGPT nhưng có giao diện khác.”
+
+Không ưu tiên UI cầu kỳ.
+
+Ưu tiên:
+
+1. AI reasoning / tutoring logic.
+2. Curriculum.
+3. Student model.
+4. Knowledge retrieval.
+5. Adaptive response.
+6. Evaluation.
+
+Giao diện chỉ cần sạch, dễ dùng và đủ để demo.
+
+---
+
+# 19. Hướng phát triển đồ án tốt nghiệp
+
+MVP WinForms có thể phát triển thành:
+
+> **Personalized AI Tutor for Programming Education**
+
+Các hướng mở rộng:
+
+* Knowledge Graph.
+* Student Knowledge Tracing.
+* Personalized Learning Path.
+* Adaptive Difficulty.
+* Socratic Tutoring.
+* Code analysis.
+* Automatic exercise generation.
+* Diagnostic assessment.
+* Learning analytics.
+* Teacher dashboard.
+* Multi-course.
+* Evaluation against general-purpose LLMs.
+* Human-in-the-loop feedback.
+
+Mục tiêu cuối:
+
+```text
+Sinh viên
+   ↓
+Diagnostic
+   ↓
+Student Model
+   ↓
+Knowledge Graph
+   ↓
+AI Tutor
+   ↓
+Personalized Exercise
+   ↓
+Code / Answer Evaluation
+   ↓
+Update Student Model
+   ↓
+Adaptive Learning Path
+```
+
+## Tư tưởng sản phẩm
+
+> **Không bắt sinh viên phải biết cách hỏi AI.**
+>
+> **Hệ thống phải hiểu sinh viên đang học gì, đã biết gì, chưa biết gì và cần được dẫn dắt như thế nào.**
+>
+> **WinForms chỉ là môn đầu tiên để chứng minh mô hình này.**
