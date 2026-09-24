@@ -1,0 +1,513 @@
+Đọc và thực hiện yêu cầu này thật nghiêm túc. Đây là project đồ án đang được phát triển theo từng checkpoint, không phải project để tự do redesign.
+
+# 1. NGUỒN THAM CHIẾU BẮT BUỘC
+
+Trong thư mục project hiện tại, hãy đọc kỹ:
+
+1. Promt.txt
+2. DoAnKy_NguyenBaQuyen_523100173.docx
+3. Toàn bộ source code hiện tại trong backend/
+4. Toàn bộ source code hiện tại trong frontend/
+5. Các file cấu hình liên quan
+
+Promt.txt và báo cáo đồ án là nguồn yêu cầu chính.
+
+Không được tự suy diễn thêm chức năng ngoài phạm vi nếu tài liệu không yêu cầu.
+
+# 2. MỤC TIÊU
+
+Cập nhật project hiện tại để nó bám sát đề tài:
+
+"Xây dựng trợ giảng AI thích ứng cho môn Lập trình WinForms cơ bản"
+
+Mục tiêu không phải tạo một chatbot có giao diện đẹp.
+
+Lõi hệ thống phải hướng tới:
+
+Sinh viên
+↓
+Câu hỏi / mã nguồn / bài tập
+↓
+Phân tích yêu cầu
+↓
+Curriculum + Knowledge Base
+↓
+Student Model
+↓
+Retrieval
+↓
+Adaptive Tutoring
+↓
+LLM
+↓
+Phản hồi phù hợp
+↓
+Lưu lịch sử tương tác
+↓
+Cập nhật Student Model
+
+# 3. NGUYÊN TẮC QUAN TRỌNG
+
+KHÔNG:
+- Không redesign toàn bộ giao diện.
+- Không tự ý thêm hàng loạt tính năng.
+- Không tự ý đổi framework.
+- Không tự ý đổi kiến trúc nếu chưa cần thiết.
+- Không tạo dữ liệu giả chỉ để giao diện trông đầy đủ.
+- Không hard-code các số liệu học tập giả.
+- Không hard-code curriculum như thể đó là curriculum chính thức nếu hệ thống chưa có dữ liệu cấu hình.
+- Không đưa toàn bộ đáp án/code cho sinh viên mặc định.
+- Không để LLM tự quyết định toàn bộ logic thích ứng chỉ bằng system prompt.
+- Không viết lại những phần đang hoạt động tốt nếu không cần thiết.
+
+ƯU TIÊN:
+1. Logic AI Tutor
+2. Curriculum
+3. Student Model
+4. Knowledge retrieval / RAG
+5. Adaptive Response
+6. Lưu lịch sử và dữ liệu học tập
+7. Kiểm thử
+8. UI chỉ chỉnh khi cần để hỗ trợ các chức năng trên
+
+# 4. KIỂM TRA PROJECT HIỆN TẠI TRƯỚC
+
+Trước khi sửa code, hãy kiểm tra và lập báo cáo ngắn:
+
+- Backend hiện có những module nào?
+- Frontend hiện có những chức năng nào?
+- RAG hiện hoạt động đến đâu?
+- Knowledge Base đang lưu dữ liệu gì?
+- Student Profile hiện có gì?
+- Student Model đã có chưa?
+- Lịch sử hội thoại đang lưu ở đâu?
+- Curriculum đang được lưu ở đâu?
+- Adaptive Response hiện được thực hiện bằng code hay chỉ bằng prompt?
+- Code analysis hiện có những gì?
+- Database hiện có những bảng/model nào?
+- Những chức năng nào đã hoạt động?
+- Những chức năng nào mới chỉ là khung?
+
+Sau khi kiểm tra, KHÔNG được viết lại toàn bộ project.
+
+Hãy xác định phần nào cần sửa và sửa trực tiếp trên cấu trúc hiện tại.
+
+# 5. HOÀN THIỆN STUDENT MODEL
+
+Student Model là thành phần quan trọng của đồ án.
+
+Mỗi sinh viên cần có learning profile.
+
+Hệ thống cần có khả năng lưu các thông tin phù hợp như:
+
+- Kiến thức đã học
+- Kiến thức chưa học
+- Concept có khả năng yếu
+- Lịch sử câu hỏi
+- Lịch sử tương tác
+- Bài tập đã làm
+- Lỗi thường gặp
+- Kết quả đánh giá nếu có
+- Mức độ hỗ trợ cần thiết
+
+Đặc biệt:
+
+KHÔNG được coi:
+"một lần sinh viên hỏi sai = sinh viên chắc chắn yếu concept đó"
+
+Student Model phải có cơ chế cập nhật từ nhiều tín hiệu.
+
+Nếu chưa đủ dữ liệu để xây mô hình phức tạp, hãy xây một phiên bản MVP đơn giản nhưng có cấu trúc rõ ràng và có thể mở rộng.
+
+Ví dụ có thể lưu:
+
+student_id
+concept
+mastery_score
+interaction_count
+mistake_count
+last_interaction
+support_level
+
+Nhưng hãy điều chỉnh theo database hiện tại thay vì tạo cấu trúc trùng lặp.
+
+# 6. HOÀN THIỆN CURRICULUM / KNOWLEDGE MAP
+
+Không hard-code curriculum chính thức vào system prompt.
+
+Cần thiết kế dữ liệu có cấu trúc cho:
+
+Course
+Chapter
+Lesson
+Concept
+Prerequisite
+Document
+
+Ví dụ:
+
+DataGridView
+- Collection
+- Control
+- Event
+
+ADO.NET
+- C#
+- SQL
+- Database connection
+
+Các concept trên chỉ là ví dụ kiến trúc.
+
+Phải thiết kế sao cho sau này có thể thêm môn khác mà không phải viết lại toàn bộ hệ thống.
+
+MVP hiện tại chỉ triển khai môn WinForms.
+
+# 7. HOÀN THIỆN RAG
+
+Kiểm tra pipeline hiện tại:
+
+Tài liệu
+↓
+Đọc tài liệu
+↓
+Chia đoạn
+↓
+Embedding
+↓
+Vector Database
+↓
+Retrieval
+↓
+Context
+↓
+LLM
+
+Giữ lại phần đang hoạt động.
+
+Chỉ cải tiến những điểm cần thiết.
+
+Quan trọng:
+
+Metadata của tài liệu nên có khả năng lưu thông tin nguồn như:
+
+- tên tài liệu
+- chương
+- bài
+- concept
+- trang nếu xác định được
+
+Mục đích là để citation/source lấy từ dữ liệu truy xuất thực tế.
+
+KHÔNG được tự bịa citation.
+
+# 8. HOÀN THIỆN ADAPTIVE RESPONSE
+
+Đây là phần quan trọng nhất.
+
+Không chỉ làm:
+
+User Question
+↓
+System Prompt
+↓
+Gemini
+
+Cần hướng tới:
+
+User Question
++
+Relevant Knowledge
++
+Curriculum
++
+Student Model
++
+Previous Interactions
++
+Uploaded Materials
+↓
+Adaptive Decision
+↓
+Response Strategy
+↓
+LLM
+↓
+Final Response
+
+Adaptive Decision có thể xác định:
+
+- concept liên quan
+- prerequisite cần thiết
+- mức độ kiến thức hiện tại
+- mức hỗ trợ
+- mức độ chi tiết
+- có nên đưa code mẫu hay không
+- có nên hỏi ngược để kiểm tra hiểu biết hay không
+- có nên hướng dẫn từng bước hay không
+
+Ví dụ:
+
+Sinh viên đã biết Event:
+→ giải thích trực tiếp hơn.
+
+Sinh viên chưa có nền tảng Event:
+→ giải thích prerequisite trước.
+
+Sinh viên hỏi cùng lỗi nhiều lần:
+→ tăng mức hỗ trợ hoặc đưa ví dụ trực quan hơn.
+
+Sinh viên đang làm bài:
+→ ưu tiên gợi ý, không đưa ngay toàn bộ đáp án.
+
+Không cần xây thuật toán machine learning phức tạp ở MVP nếu chưa cần.
+
+Có thể xây Adaptive Rule Engine rõ ràng, có cấu trúc và giải thích được.
+
+QUAN TRỌNG:
+Không để toàn bộ adaptive logic nằm trong một system prompt khổng lồ.
+
+# 9. LƯU LỊCH SỬ TƯƠNG TÁC
+
+Nếu hiện tại lịch sử hội thoại chỉ lưu trong RAM/in-memory thì chuyển phần cần thiết sang database.
+
+Cần có khả năng lưu:
+
+- sinh viên
+- câu hỏi
+- câu trả lời
+- thời gian
+- concept liên quan nếu xác định được
+- nguồn được retrieval
+- thông tin hỗ trợ thích ứng nếu có
+
+Mục đích của dữ liệu này là phục vụ:
+1. xem lịch sử
+2. phân tích quá trình học
+3. cập nhật Student Model
+4. tạo Adaptive Response
+
+# 10. DOMAIN RESTRICTION
+
+AI Tutor phải tập trung vào phạm vi môn:
+
+Lập trình WinForms cơ bản
+
+Bao gồm các nội dung liên quan đến:
+- C# cần thiết cho WinForms
+- Windows Forms
+- Form
+- Controls
+- Event / Event Handler
+- giao diện
+- tương tác người dùng
+- xử lý dữ liệu cơ bản
+- bài tập WinForms
+
+Nếu câu hỏi nằm hoàn toàn ngoài phạm vi môn học, hệ thống phải có cơ chế từ chối hoặc định hướng lại.
+
+Không biến hệ thống thành chatbot đa mục đích.
+
+# 11. CODE ANALYSIS
+
+Sinh viên có thể gửi mã C#/WinForms.
+
+AI cần hướng tới:
+
+Code
+↓
+Phát hiện vấn đề
+↓
+Chỉ vị trí
+↓
+Giải thích nguyên nhân
+↓
+Giải thích concept phía sau lỗi
+↓
+Gợi ý cách sửa
+↓
+Code mẫu khi cần
+
+Không chỉ đơn giản:
+"đổi dòng X thành Y".
+
+# 12. CITATION / SOURCE
+
+Nếu câu trả lời sử dụng Knowledge Base thì phải cố gắng trả về nguồn thực tế từ kết quả retrieval.
+
+Không được tạo nguồn giả.
+
+Nếu không xác định được nguồn chính xác thì không được bịa tên chương hoặc số trang.
+
+# 13. DATABASE
+
+Kiểm tra database hiện tại trước khi sửa.
+
+Không tạo thêm bảng trùng chức năng.
+
+Thiết kế database tối thiểu phải có khả năng mở rộng cho:
+
+- User / Student
+- Course
+- Curriculum / Concept
+- Student Learning State
+- Conversation / Interaction
+- Documents / Knowledge Base metadata
+
+Chỉ tạo những bảng thực sự cần thiết cho MVP.
+
+# 14. FRONTEND
+
+Không ưu tiên làm đẹp giao diện.
+
+Chỉ cập nhật frontend nếu cần để hiển thị các chức năng đã hoàn thiện, ví dụ:
+
+- câu trả lời AI
+- nguồn
+- lịch sử
+- trạng thái học tập cơ bản
+- mức hỗ trợ nếu cần
+- upload tài liệu
+
+Không tự ý tạo dashboard phức tạp.
+
+# 15. PHẠM VI MVP
+
+Must Have:
+
+- Đăng nhập
+- Chat AI Tutor
+- Upload tài liệu
+- Knowledge Base WinForms
+- RAG
+- Domain restriction
+- Citation/source
+- Code explanation
+- Lưu lịch sử hội thoại
+- Curriculum cơ bản
+- Student Profile cơ bản
+
+Should Have:
+
+- Knowledge Map
+- Exercise Mode
+- Adaptive Response
+- Teacher Dashboard cơ bản
+
+Giai đoạn sau:
+
+- Diagnostic Test
+- Personalized Learning Path
+- Automatic Code Assessment
+- Learning Analytics nâng cao
+- Multi-course
+- Knowledge Graph nâng cao
+- Human feedback loop
+
+Không được vì thấy các mục "giai đoạn sau" mà tự triển khai tất cả ngay bây giờ.
+
+# 16. YÊU CẦU VỀ CODE
+
+Code phải:
+- rõ ràng
+- chia module hợp lý
+- dễ bảo trì
+- không tạo file tạm không cần thiết
+- không duplicate logic
+- không hard-code dữ liệu giả
+- không xóa chức năng đang hoạt động nếu không có lý do
+
+Nếu sửa một module, kiểm tra các module liên quan để tránh làm hỏng hệ thống.
+
+Sau mỗi nhóm thay đổi phải kiểm tra lỗi.
+
+# 17. KIỂM TRA SAU KHI SỬA
+
+Sau khi cập nhật:
+
+1. Kiểm tra backend khởi động được.
+2. Kiểm tra frontend khởi động được.
+3. Kiểm tra đăng nhập.
+4. Kiểm tra chat.
+5. Kiểm tra RAG.
+6. Kiểm tra upload tài liệu.
+7. Kiểm tra citation.
+8. Kiểm tra lưu lịch sử.
+9. Kiểm tra Student Model.
+10. Kiểm tra Adaptive Response.
+11. Kiểm tra code analysis.
+12. Kiểm tra domain restriction.
+
+Nếu chức năng nào chưa thể kiểm tra do thiếu dữ liệu thì phải ghi rõ, KHÔNG giả lập kết quả thành công.
+
+# 18. QUAN TRỌNG NHẤT
+
+Đừng cố làm cho project "trông hoàn chỉnh".
+
+Tao cần một project đồ án có kiến trúc và logic kỹ thuật rõ ràng.
+
+Ưu tiên chứng minh được:
+
+RAG
++
+Curriculum
++
+Student Model
++
+Interaction History
++
+Adaptive Response
+=
+AI Tutor thích ứng
+
+Mục tiêu là chuyển từ:
+
+"Người học hỏi → AI trả lời"
+
+sang:
+
+"Người học tương tác → hệ thống phân tích quá trình học → xác định nhu cầu → AI đưa ra hỗ trợ phù hợp"
+
+# 19. CÁCH THỰC HIỆN
+
+Thực hiện theo thứ tự:
+
+PHASE 1:
+Phân tích source hiện tại.
+
+PHASE 2:
+Xác định các phần cần thay đổi.
+
+PHASE 3:
+Sửa database/model trước nếu cần.
+
+PHASE 4:
+Sửa backend AI Tutor / Student Model / Adaptive Logic.
+
+PHASE 5:
+Sửa RAG và citation nếu cần.
+
+PHASE 6:
+Kết nối frontend với backend.
+
+PHASE 7:
+Kiểm thử.
+
+Sau khi hoàn thành, xuất báo cáo cuối cùng gồm:
+
+- Đã thay đổi file nào
+- Mỗi file thay đổi để làm gì
+- Chức năng nào đã hoàn thành
+- Chức năng nào chưa hoàn thành
+- Cách chạy project
+- Cách kiểm tra RAG
+- Cách kiểm tra Student Model
+- Cách kiểm tra Adaptive Response
+- Những điểm còn hạn chế
+- Những việc đề xuất cho giai đoạn tiếp theo
+
+KHÔNG được nói chung chung rằng "đã tối ưu hệ thống".
+
+Phải chỉ rõ:
+FILE NÀO → THAY ĐỔI GÌ → VÌ SAO → KẾT QUẢ GÌ.
+
+Bắt đầu bằng việc đọc và phân tích project hiện tại, sau đó thực hiện cập nhật theo các yêu cầu trên.

@@ -1,0 +1,572 @@
+Hãy redesign lại toàn bộ giao diện CHAT của AI Tutor hiện tại.
+
+MỤC TIÊU:
+Tạo một giao diện AI Tutor hiện đại, chuyên nghiệp, sạch và có cảm giác giống các AI chat app hiện đại như ChatGPT/Claude, nhưng KHÔNG copy nguyên mẫu giao diện hoặc branding của chúng.
+
+Quan trọng:
+Không chỉ chỉnh màu sắc.
+Phải thiết kế lại layout, spacing, message container, input area, sidebar và cách hiển thị code/source để giao diện thực sự giống một sản phẩm AI Tutor hoàn chỉnh.
+
+==================================================
+1. LAYOUT TỔNG THỂ
+==================================================
+
+Thiết kế theo mô hình:
+
+┌──────────────────────────────────────────────────────────────┐
+│ Sidebar │              Main Chat Area                       │
+│         │                                                    │
+│ Logo    │  Header                                            │
+│ New Chat│                                                    │
+│ Search  │                                                    │
+│         │             Conversation                           │
+│ Recent  │                                                    │
+│ chats   │                                                    │
+│         │                                                    │
+│         │                                                    │
+│         │                                                    │
+│         │                                                    │
+│ User    │                Message Input                       │
+└──────────────────────────────────────────────────────────────┘
+
+Sidebar:
+- Chiều rộng khoảng 250–280px.
+- Có thể collapse.
+- Không chiếm quá nhiều diện tích.
+- Chat area phải là khu vực nổi bật nhất.
+- Trên desktop, nội dung hội thoại nằm giữa màn hình với max-width hợp lý.
+- Khi user gửi message dài hoặc paste code dài, conversation container tự mở rộng theo chiều ngang trong giới hạn hợp lý.
+- Không để chat bị bó hẹp thành một cột nhỏ.
+
+==================================================
+2. SIDEBAR
+==================================================
+
+Thiết kế sidebar hiện đại, tối giản.
+
+Phần trên:
+- Logo AI Tutor
+- Tên hệ thống
+- Nút "+ Cuộc trò chuyện mới"
+- Search conversation
+
+Phần giữa:
+- Recent conversations
+- Group theo:
+  + Hôm nay
+  + Hôm qua
+  + 7 ngày trước
+
+Mỗi conversation:
+- Icon chat
+- Title
+- Hover state
+- Active state rõ ràng
+- Context menu (...) để:
+  + Rename
+  + Delete
+
+Không sử dụng card quá to.
+Không tạo border dày.
+Không làm sidebar rối.
+
+Phần dưới:
+- Avatar người dùng
+- Username
+- Student Profile
+- Settings
+- Logout
+
+==================================================
+3. MAIN CHAT HEADER
+==================================================
+
+Header của chat phải cực kỳ gọn.
+
+Bên trái:
+- Icon AI Tutor
+- "AI Tutor"
+- trạng thái nhỏ:
+  "WinForms Tutor"
+
+Bên phải:
+- nút New Chat
+- nút Clear conversation hoặc menu nếu cần
+
+Không để header chiếm quá nhiều chiều cao.
+
+==================================================
+4. CHAT EMPTY STATE
+==================================================
+
+Khi chưa có tin nhắn:
+
+Ở giữa màn hình:
+
+Icon AI Tutor
+
+"Xin chào! Tôi là AI Tutor"
+
+"Trợ giảng hỗ trợ bạn học C# và Windows Forms."
+
+Bên dưới hiển thị 3–4 suggestion cards:
+
+"Giải thích Event Handler trong WinForms"
+
+"Phân tích đoạn code C# này"
+
+"Hướng dẫn tạo Form đăng nhập"
+
+"Giải thích Button Click Event"
+
+Các card phải nhỏ, đẹp, hover nhẹ.
+
+Khi click suggestion:
+→ tự động đưa nội dung vào input hoặc gửi request tùy logic hiện tại.
+
+==================================================
+5. MESSAGE LAYOUT
+==================================================
+
+Đây là phần QUAN TRỌNG NHẤT.
+
+Không dùng kiểu:
+
+User:
+[card]
+
+AI:
+[card]
+
+rồi mỗi message là một box có border.
+
+Thay vào đó dùng layout giống modern AI chat:
+
+USER MESSAGE:
+- căn phải hoặc nằm trong conversation flow tự nhiên
+- bubble/card nhỏ gọn
+- background nhẹ
+- border-radius lớn
+- không chiếm full width nếu message ngắn
+- message dài thì tự mở rộng.
+
+AI MESSAGE:
+- không đặt trong bubble quá nặng.
+- AI response nằm trực tiếp trong conversation area.
+- Avatar/icon AI ở bên trái.
+- Nội dung có typography rõ ràng.
+- Heading, paragraph, bullet, numbered list render đẹp.
+- Markdown render tốt.
+- Code block render chuyên nghiệp.
+
+Ví dụ:
+
+        AI icon
+        AI Tutor
+
+        Để xử lý sự kiện Button Click trong WinForms,
+        bạn có thể sử dụng Event Handler...
+
+        1. Tạo Button
+        2. Đăng ký Click event
+        3. Viết logic xử lý
+
+        [Code Block]
+
+        Sources
+        ┌────────────────────────────┐
+        │ WinForms Event Handling    │
+        │ Page 12                    │
+        └────────────────────────────┘
+
+Không tạo bubble khổng lồ bao quanh toàn bộ AI response.
+
+==================================================
+6. USER MESSAGE
+==================================================
+
+User message phải trông giống chat hiện đại.
+
+Ví dụ:
+
+                         ┌──────────────────────────┐
+                         │ Event Handler là gì?     │
+                         └──────────────────────────┘
+
+Nếu user paste code:
+
+                         ┌──────────────────────────┐
+                         │ ```csharp                │
+                         │ private void button...   │
+                         │ ```                      │
+                         └──────────────────────────┘
+
+Code phải giữ format.
+
+==================================================
+7. CODE BLOCK
+==================================================
+
+Đây là chức năng quan trọng của AI Tutor.
+
+Code block phải cực kỳ đẹp.
+
+Có header:
+
+C#
+                           Copy
+
+Bên dưới:
+- syntax highlighting
+- line number nếu phù hợp
+- horizontal scrolling
+- không làm vỡ layout.
+
+Có nút:
+Copy code
+
+Khi copy:
+→ hiện trạng thái "Copied".
+
+Nếu code dài:
+→ giới hạn chiều cao hợp lý
+→ scroll bên trong.
+
+Không để code dài kéo toàn bộ trang thành một khối cực dài.
+
+==================================================
+8. INPUT AREA
+==================================================
+
+Thiết kế input giống modern AI chat.
+
+Input nằm ở bottom.
+
+Dạng:
+
+┌───────────────────────────────────────────────────────────┐
+│ Ask AI Tutor...                                           │
+│                                                           │
+│                                                           │
+│ 📎        Add files                     🎤       ➤        │
+└───────────────────────────────────────────────────────────┘
+
+Input:
+- bo góc lớn
+- border nhẹ
+- shadow rất nhẹ
+- focus state đẹp
+- tự tăng chiều cao khi nhập nhiều dòng
+- tối đa khoảng 6–8 dòng rồi scroll.
+
+Bên trái:
+- Attach file
+- Code / Insert code nếu cần
+
+Bên phải:
+- Send button
+
+Send bằng Enter.
+Shift + Enter xuống dòng.
+
+Khi AI đang trả lời:
+- Send button chuyển thành Stop generation nếu backend hỗ trợ.
+- Hiển thị typing/loading indicator.
+
+==================================================
+9. FILE UPLOAD
+==================================================
+
+Khi upload tài liệu:
+
+Không chỉ hiện:
+
+filename.pdf
+
+Mà tạo attachment chip/card:
+
+┌─────────────────────────────┐
+│ 📄  winforms_basic.pdf      │
+│     PDF · 2.4 MB            │
+│                         ×   │
+└─────────────────────────────┘
+
+Có trạng thái:
+- Uploading
+- Processing
+- Ready
+- Error
+
+Nếu tài liệu đang được đưa vào Knowledge Base:
+hiển thị trạng thái rõ ràng.
+
+==================================================
+10. SOURCE / CITATION
+==================================================
+
+AI Tutor có RAG nên Source phải là thành phần UI quan trọng.
+
+Sau AI response:
+
+Sources
+
+┌─────────────────────────────────────┐
+│ 📄 WinForms Event Handling          │
+│    Chapter 2 · Page 15              │
+│                                     │
+│    View source →                    │
+└─────────────────────────────────────┘
+
+Nếu có nhiều source:
+
+Sources (3)
+
+[Source 1]
+[Source 2]
+[Source 3]
+
+Không để source thành một dòng text khó đọc.
+
+==================================================
+11. ADAPTIVE RESPONSE
+==================================================
+
+Vì đây là AI Tutor thích ứng, UI nên thể hiện nhẹ nhàng trạng thái hỗ trợ.
+
+Ví dụ bên cạnh AI Tutor:
+
+AI Tutor
+● Personalized response
+
+Hoặc:
+
+Learning level: Beginner
+
+Nhưng KHÔNG được làm giao diện giống dashboard phức tạp.
+
+Chỉ hiển thị khi có dữ liệu thực tế từ backend.
+
+Không hard-code trạng thái học tập giả.
+
+==================================================
+12. MARKDOWN
+==================================================
+
+AI response phải render tốt:
+
+- Heading
+- Bold
+- Italic
+- Bullet
+- Numbered list
+- Inline code
+- Code block
+- Table
+- Link
+- Blockquote
+
+Typography phải có hierarchy rõ ràng.
+
+Không để toàn bộ response thành một cục text.
+
+==================================================
+13. RESPONSIVE
+==================================================
+
+Desktop:
+- Sidebar + main chat.
+
+Tablet:
+- Sidebar thu nhỏ.
+
+Mobile:
+- Sidebar chuyển thành drawer.
+- Chat full width.
+- Input cố định phía dưới.
+- Code block có horizontal scroll.
+
+Không để horizontal overflow toàn trang.
+
+==================================================
+14. VISUAL STYLE
+==================================================
+
+Phong cách:
+
+Modern
+Minimal
+Professional
+AI SaaS
+Academic technology
+
+Ưu tiên:
+- khoảng trắng tốt
+- typography đẹp
+- border tinh tế
+- shadow nhẹ
+- border-radius vừa phải
+- animation rất nhẹ.
+
+Không:
+- gradient tím quá lòe loẹt
+- neon
+- quá nhiều glassmorphism
+- card bo tròn mọi thứ
+- icon quá to
+- màu sắc sặc sỡ
+- button khổng lồ
+- border dày.
+
+Có thể dùng dark theme làm theme chính nếu giao diện hiện tại đang dùng dark theme.
+
+Nếu project đã có design system:
+→ giữ lại màu sắc chính và component system hiện tại.
+→ chỉ redesign layout và hierarchy.
+
+==================================================
+15. ANIMATION
+==================================================
+
+Animation nhẹ:
+
+- sidebar open/close
+- message appearance
+- hover
+- button press
+- source expand/collapse
+- typing indicator
+
+Không dùng animation gây chậm hoặc gây cảm giác web template.
+
+==================================================
+16. UX QUAN TRỌNG
+==================================================
+
+Khi user gửi câu hỏi:
+
+Input
+→ message xuất hiện ngay trong conversation
+→ loading state
+→ AI response streaming hoặc loading
+→ response hoàn tất
+→ source xuất hiện bên dưới.
+
+Conversation tự động scroll xuống message mới.
+
+Khi user scroll lên:
+→ không tự động kéo xuống nếu user đang đọc message cũ.
+
+Có nút:
+"↓ Jump to latest"
+
+==================================================
+17. PASTE CODE
+==================================================
+
+Đây là điểm đặc biệt của AI Tutor.
+
+Nếu user paste code dài:
+- phát hiện code block
+- hiển thị code đẹp
+- không làm input trở thành một textarea khổng lồ.
+- conversation tự xử lý chiều rộng.
+
+Ví dụ:
+
+User:
+
+┌────────────────────────────────────────────┐
+│ C#                                         │
+│                                            │
+│ private void button1_Click(...)            │
+│ {                                          │
+│     ...                                    │
+│ }                                          │
+│                                            │
+│ 28 lines                                   │
+└────────────────────────────────────────────┘
+
+AI:
+→ phân tích code
+→ vấn đề
+→ nguyên nhân
+→ hướng sửa
+→ code đề xuất.
+
+==================================================
+18. KHÔNG PHÁ BACKEND
+==================================================
+
+Đây chỉ là redesign FRONTEND/UI.
+
+Không được:
+- thay đổi API endpoint nếu không cần
+- thay đổi database
+- thay đổi response schema
+- thay đổi RAG
+- thay đổi AI Tutor Engine.
+
+Nếu frontend hiện tại đang sử dụng API nào:
+→ giữ nguyên API đó.
+
+Nếu response schema hiện tại có:
+session_id
+response
+sources
+
+→ phải tiếp tục hỗ trợ đúng schema đó.
+
+==================================================
+19. KIỂM TRA SAU KHI REDESIGN
+==================================================
+
+Sau khi hoàn thành phải kiểm tra:
+
+1. Login
+2. New chat
+3. Send message
+4. Receive AI response
+5. Markdown
+6. Code block
+7. Copy code
+8. Source/Citation
+9. Upload file
+10. Loading state
+11. Error state
+12. Chat history
+13. Sidebar
+14. Long conversation
+15. Paste long code
+16. Responsive
+17. Scroll behavior
+
+Không được chỉ chụp screenshot giao diện rồi kết luận hoàn thành.
+
+==================================================
+20. TIÊU CHUẨN CUỐI
+==================================================
+
+Tao muốn cảm giác khi mở trang:
+
+"Đây là một sản phẩm AI Tutor thật"
+
+chứ không phải:
+
+"Đây là một bài đồ án sinh viên dựng vài component chat."
+
+Ưu tiên chất lượng UX và layout hơn việc nhồi thêm component.
+
+Trước khi code:
+- đọc toàn bộ frontend hiện tại
+- xác định component/page/style đang dùng
+- giữ lại logic đang hoạt động
+- chỉ redesign presentation/layout.
+
+Sau khi code:
+- chạy project
+- kiểm tra từng trạng thái
+- sửa lỗi UI
+- đảm bảo không phá chức năng hiện tại.
+
+Không giải thích dài dòng.
+Hãy trực tiếp phân tích frontend hiện tại và triển khai redesign.

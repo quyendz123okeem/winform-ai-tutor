@@ -38,7 +38,8 @@ class KnowledgeBase:
         # Embedding model - chuyển text thành vector
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/gemini-embedding-2",
-            google_api_key=api_key
+            google_api_key=api_key,
+            max_retries=1
         )
 
         # ChromaDB client - lưu trữ vector local
@@ -65,6 +66,16 @@ class KnowledgeBase:
             text = ""
             for page in reader.pages:
                 text += page.extract_text() or ""
+            return text
+
+        elif ext == ".pptx":
+            from pptx import Presentation
+            prs = Presentation(file_path)
+            text = ""
+            for slide in prs.slides:
+                for shape in slide.shapes:
+                    if hasattr(shape, "text"):
+                        text += shape.text + "\n"
             return text
 
         elif ext in (".docx",):

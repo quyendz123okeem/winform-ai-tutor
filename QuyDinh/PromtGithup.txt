@@ -1,0 +1,33 @@
+📌 [QUY ĐỊNH BẮT BỘC] LỊCH PUSH CODE, TẦN SUẤT COMMIT VÀ CHUẨN COMMIT MESSAGE THEO 6 MỐC CHECKPOINT
+DÀNH CHO SINH VIÊN 523100 NĂM THỨ 4
+Chào các em,
+Để đồng bộ với Bảng theo dõi tiến độ Đồ án kỳ (6 Checkpoints), lịch push code và commit trên GitHub của các em bắt buộc phải bám sát theo các mốc hạn chót (Deadline) dưới đây.
+1. ⏱ LỊCH PUSH CODE THEO 6 MỐC CHECKPOINT (DEADLINE BẮT BỘC)
+Sinh viên phải hoàn thành commit và push mã nguồn/tài liệu lên GitHub Repo trước 23h59 của các mốc hạn chót:
+• CP1: Đăng ký đề tài (Hạn: 04/09/2026) — Push file Đề cương, phạm vi & mục tiêu đồ án (file README.md/Docs).
+• CP2: Phân tích (Hạn: 12/09/2026) — Push file Phân tích yêu cầu nghiệp vụ, sơ đồ Use Case, luồng xử lý, ERD.
+• CP3: Thiết kế (Hạn: 19/09/2026) — Push bản thiết kế Kiến trúc, CSDL, API, UI/UX sơ bộ lên Repo.
+• CP4: Triển khai (Hạn: 26/09/2026) — Push mã nguồn lập trình chức năng cốt lõi (Source code chạy được với dữ liệu mẫu).
+• CP5: Kiểm thử (Hạn: 26/09/2026) — Push Bảng Test case, kết quả kiểm thử và các commit sửa lỗi (Bug fix).
+• CP6: Báo cáo & Demo (Hạn: 10/10/2026) — Push hoàn thiện Báo cáo cuối kỳ (PDF/DOCX), Slide demo, Video demo link & Source code bản chính thức.
+💡 Yêu cầu tần suất Commit: Tối thiểu 3 - 5 commit / checkpoint stage (tùy giai đoạn). Cấm hành vi dồn toàn bộ code vào 1 commit duy nhất sát ngày hạn checkpoint.
+2. 📝 QUY ĐỊNH VIẾT COMMIT MESSAGE (NỘI DUNG COMMIT)
+❌ CẤM: Không dùng các từ chung chung: fix, update, code mới, thêm file, abcxyz. (Các commit vi phạm sẽ không được tính làm minh chứng KĐCLGD).
+✅ CẤU TRÚC COMMIT STANDARD:Cú pháp bắt buộc: <Checkpoint>_<Loại_thay_đổi>: <Nội công dung việc>
+Trong đó:
+• <Checkpoint>: Điền từ CP1 đến CP6 tương ứng với giai đoạn đang làm.
+• <Loại_thay_đổi>: 
+	• docs: Thêm/sửa tài liệu, phân tích, thiết kế, báo cáo.
+	• feat: Thêm chức năng, giao diện, module mới.
+	• fix: Sửa lỗi code, sửa lỗi logic/database.
+	• test: Thêm test case, kịch bản kiểm thử.
+	• refactor: Tối ưu hóa code, cấu trúc lại thư mục.
+Ví dụ mẫu chuẩn:
+• CP2_docs: Cập nhật sơ đồ Use Case luồng đặt hàng
+• CP3_docs: Thiết kế CSDL bảng Users và Products
+• CP4_feat: Triển khai chức năng Đăng nhập và Phân quyền
+• CP5_fix: Sửa lỗi không lưu token khi đăng nhập thất bại
+• CP6_docs: Hoàn thiện file Báo cáo tổng kết đồ án cuối kỳ
+Các em chú ý thực hiện đúng quy định để đảm bảo điểm tiến độ.
+
+KCNS&TT - CNTT - Nguyễn Mạnh Dũng

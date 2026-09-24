@@ -1,0 +1,36 @@
+==================================================
+BẮT ĐẦU CHẠY BỘ TEST CHECKPOINT 5
+==================================================
+
+[A] AUTHENTICATION TESTS
+A02 (Sai Username): Status 401 - Expected 401
+A03 (Sai Password): Status 401 - Expected 401
+A01 (Đăng nhập đúng): Status 200 - Expected 200, Body: success
+
+[B] AI TUTOR TESTS
+B01 (Câu hỏi WinForms hợp lệ): Sending request...
+   Response status: 200
+   Content snippet: Chào bạn! Rất vui được đồng hành cùng bạn trong môn học **Lập trình WinForms cơ bản**.
+
+Để tạo một n...
+B02 (Câu hỏi ngoài phạm vi): Sending request...
+   Response status: 200
+   Content snippet: Dạ, món phở bò rất ngon nhưng mình là **AI Tutor chuyên về môn Lập trình WinForms cơ bản (C#)** nên ...
+
+[C] RAG TESTS
+C01 (Retrieval RAG): Sending request...
+   Citation: None
+
+[D] UPLOAD TESTS
+D01 (Upload file): Status 200 - {'status': 'success', 'filename': 'dummy.txt', 'chunks': 1, 'message': "Đã xử lý 'dummy.txt' thành 1 đoạn kiến thức"}
+
+[E] CODE ANALYSIS TESTS
+E01 (Code C# lỗi syntax): Sending request...
+   Response status: 200
+   Content snippet: Lỗi hệ thống: Error calling model 'gemini-3.6-flash' (RESOURCE_EXHAUSTED): 429 RESOURCE_EXHAUSTED. {...
+
+[F & G] STUDENT MODEL & ADAPTIVE TESTS
+F01 (Cập nhật tiến độ): Đã gửi nhiều câu hỏi, kiểm tra lịch sử...
+
+[H] HISTORY TESTS
+H01 (Lấy lịch sử): Status 200, Found 4 messages.
